@@ -18,7 +18,7 @@ mongoose
 app.use(express.urlencoded());
 
 app.get('/', (req, res) => res.json ({
-    msg: "Hola mi amigo!"
+    msg: "Hola mi hermano!"
 }));
 
 app.post('/users', (req, res) => {
