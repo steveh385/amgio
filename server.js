@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 const User = require('./models/User');
-//const Post = require('./models/Post');
+const Post = require('./models/Post');
+const keys = require('./config/keys');
 
-const db = "mongodb+srv://steveh385:chester2020@cluster0-jvkml.mongodb.net/test?retryWrites=true&w=majority"
+const db = keys.mongoURI;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -16,19 +17,20 @@ mongoose
 .catch(err => console.log(err));
 
 
-app.use(express.urlencoded());
+//app.use(express.urlencoded());
+
+const userRoutes = require('./routes/User')
+app.use('/users', userRoutes);
+
+const postRoutes = require('./routes/Post')
+app.use('/posts', postRoutes);
 
 app.get('/', (req, res) =>  {
     res.send("Hola mi Perro woogie!") 
 });
 
-//const userRoutes = require('./routes/User')
-//app.use('/users', userRoutes);
 
-const userRoutes = require('./routes/Post')
-app.use('/posts', userRoutes);
-
-app.post('./users/posts', (req, res) => {
+/*app.post('./users/posts', (req, res) => {
     User.findOne({email: req.body.email})
         .then( user => {
             Post.find({ user: user})
@@ -38,7 +40,7 @@ app.post('./users/posts', (req, res) => {
                 .catch(err => console.log(err))
         })
     
-})
+})*/
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Your application is running @ http://localhost:${port}` ));

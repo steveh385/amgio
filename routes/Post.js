@@ -1,9 +1,8 @@
-const Post = require('../models/Post');
 const express = require('express');
-
+const Post = require('../models/Post');
+const User = require('../models/User');
 
 const router = express.Router();
-
 
 router.post('/', (req, res) => {
     User
@@ -28,7 +27,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
     Post
         .find()
-        .then(post => res.json(post))
+        .then(posts => res.json(posts))
         .catch(err => console.log(err))
 });
 
