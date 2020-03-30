@@ -5,6 +5,7 @@ const app = express();
 const User = require('./models/User');
 const Post = require('./models/Post');
 const keys = require('./config/keys');
+const passport = require('passport');
 
 const db = keys.mongoURI;
 
@@ -16,6 +17,8 @@ mongoose
 .then(() => console.log("Db connected"))
 .catch(err => console.log(err));
 
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 //app.use(express.urlencoded());
 
@@ -24,6 +27,11 @@ app.use('/users', userRoutes);
 
 const postRoutes = require('./routes/Post')
 app.use('/posts', postRoutes);
+
+
+// Auth routes
+const authRoutes = require('./routes/Auth');
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) =>  {
     res.send("Hola mi Perro woogie!") 
